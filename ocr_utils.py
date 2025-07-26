@@ -9,7 +9,7 @@ import pytesseract
 import os
 from pdf2image import convert_from_path
 
-genai.configure(api_key="AIzaSyBJu-z3o7vOmkYTtj22uCXIYNZNcTBrzHg")  # Replace with your actual key
+genai.configure(api_key="YOUR-API-KEY")  # Replace with your actual key
 
 
 def extract_text(image_path):
