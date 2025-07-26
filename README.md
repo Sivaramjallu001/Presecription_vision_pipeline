@@ -23,7 +23,7 @@ A Streamlit-based AI application that extracts **structured medical data** from 
 ---
 
 ## 📁 Project Structure
-
+```bash
 prescription_vision_pipeline/
 │
 ├── app.py # Streamlit UI logic
@@ -31,7 +31,7 @@ prescription_vision_pipeline/
 ├── file_utils.py # File saving & compression
 ├── requirements.txt # Python dependencies
 └── extracted/ # Folder for uploaded images
-
+```
 
 🛠️ Installation
 
