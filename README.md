@@ -22,11 +22,31 @@ A Streamlit-based AI application that extracts **structured medical data** from 
 
 ---
 
-## 🖼️ Demo
-
-![Demo Screenshot](screenshots/demo_ui.png)
-
----
-
 ## 📁 Project Structure
 
+prescription_vision_pipeline/
+│
+├── app.py # Streamlit UI logic
+├── ocr_utils.py # Gemini + Tesseract OCR + parsing
+├── file_utils.py # File saving & compression
+├── requirements.txt # Python dependencies
+└── extracted/ # Folder for uploaded images
+
+
+🛠️ Installation
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/Sivaramjallu001/Presecription_vision_pipeline.git
+cd prescription-vision-pipeline
+
+python -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+export GEMINI_API_KEY="your_key"     # Linux/Mac
+set GEMINI_API_KEY="your_key"        # Windows
+
+streamlit run app.py
