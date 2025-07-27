@@ -1,26 +1,84 @@
 # 🩺 Prescription Vision Pipeline
 
-A Streamlit-based AI application that extracts **structured medical data** from **prescription images or PDFs** using **Gemini Vision OCR** with a **Tesseract fallback**. This tool helps digitize and clean prescription records for healthcare workflows.
+A Streamlit-based web application to extract structured information from handwritten or printed medical prescription images using Google Gemini and Tesseract OCR as fallback.
 
 ---
 
-## 🚀 Features
+## 📌 Table of Contents
 
-- 📤 Upload prescriptions in **JPG, PNG, or PDF**
-- 🧠 Extracts text using **Gemini Vision API**
-- 🔁 Fallback to **Tesseract OCR** if Gemini fails
-- 📝 Parses key fields:
-  - Doctor Name
-  - Patient Info
-  - Medicines
-  - Instructions
-  - Date
-- ✍️ Editable structured data preview
-- 💾 Download as **JSON** or **CSV**
-- ⚡ Optimized for performance with image compression
-- 🔒 No external database or login needed
+- [Introduction](#introduction)
+- [Problem Statement](#problem-statement)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Sample Output](#sample-output)
+- [Appendix](#appendix)
 
 ---
+
+## 📖 Introduction
+
+Healthcare records are often documented in unstructured handwritten or printed formats. This project leverages modern OCR techniques and generative AI (Gemini) to extract meaningful structured data from prescription images, including patient details, doctor information, medications, and notes.
+
+---
+
+## ❗ Problem Statement
+
+Manual extraction of prescription data is time-consuming and error-prone. There's a need for an automated tool that can:
+- Digitize handwritten prescriptions
+- Extract structured data from them
+- Provide an editable preview
+- Handle both images and PDFs
+- Work even if the AI model fails (via OCR fallback)
+
+---
+
+## 🌟 Features
+
+- ✅ Upload `.jpg`, `.jpeg`, `.png`, or `.pdf` prescriptions
+- ✅ Extracts:
+  - Patient Name, Age, Gender
+  - Doctor Name, Registration Number
+  - Prescription Date
+  - Medicines (Name, Dosage, Frequency, Duration)
+  - Additional Notes
+- ✅ Uses Gemini API as primary model
+- ✅ Fallback to Tesseract OCR if Gemini fails
+- ✅ Editable preview form
+- ✅ Download structured JSON and CSV
+
+---
+
+## 🏗 Architecture
+
+```text
+           ┌────────────┐
+           │  Upload    │
+           │  Image/PDF │
+           └────┬───────┘
+                ↓
+      ┌────────────────────┐
+      │ Gemini (AI Parsing)│
+      └────────┬───────────┘
+               ↓ fallback
+     ┌───────────────────────┐
+     │ Tesseract OCR (Backup)│
+     └────────┬──────────────┘
+              ↓
+      ┌────────────────────┐
+      │ Extract & Normalize│
+      └────────┬───────────┘
+               ↓
+     ┌─────────────────────────────┐
+     │ Streamlit Editable Preview  │
+     └────────┬────────────────────┘
+              ↓
+     ┌────────────────────────────────────┐
+     │ JSON/CSV Download of Prescription  │
+     └────────────────────────────────────┘
+
 
 ## 📁 Project Structure
 ```bash
