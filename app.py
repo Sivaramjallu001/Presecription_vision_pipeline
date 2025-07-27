@@ -5,6 +5,7 @@ import uuid
 import os
 from utils.ocr_utils import extract_text
 from utils.file_utils import save_uploaded_file
+from pdf2image import convert_from_path
 
 # Page setup
 st.set_page_config(page_title="Prescription Vision Pipeline", layout="wide")
@@ -20,7 +21,15 @@ if uploaded_file:
         raw_text, parsed_data = extract_text(image_path)
 
     st.success("✅ Extraction complete!")
-    st.image(image_path, caption="Uploaded Prescription", use_container_width=False, width=200)
+    ext = os.path.splitext(image_path)[1].lower()
+
+    if ext == ".pdf":
+        # Convert first page of PDF to image for display
+        pdf_images = convert_from_path(image_path, dpi=200)
+        st.image(pdf_images[0], caption="📄 PDF First Page", width=250)
+    else:
+        # Directly display image
+        st.image(image_path, caption="🖼️ Uploaded Prescription", width=250)
 
     edited_data = {}
     if parsed_data:
