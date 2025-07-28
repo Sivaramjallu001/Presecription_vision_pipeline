@@ -1,27 +1,28 @@
 import os
-from werkzeug.utils import secure_filename
-from PIL import Image
-from pdf2image import convert_from_path
+import uuid
 
-def save_uploaded_file(file, data_folder='data/raw/', upload_folder='static/uploads/'):
-    os.makedirs(data_folder, exist_ok=True)
-    os.makedirs(upload_folder, exist_ok=True)
+def save_uploaded_file(uploaded_file, save_dir="uploaded_prescriptions"):
+    """
+    Saves the uploaded file to the specified directory with a unique name.
 
-    filename = secure_filename(file.filename)
-    file_ext = filename.split('.')[-1].lower()
-    raw_path = os.path.join(data_folder, filename)
+    Args:
+        uploaded_file (UploadedFile): File object from Streamlit uploader.
+        save_dir (str): Directory where the image will be saved.
 
-    # Save original file
-    file.save(raw_path)
+    Returns:
+        str: Full path of the saved file.
+    """
+    # Create directory if it doesn't exist
+    os.makedirs(save_dir, exist_ok=True)
 
-    # Convert to image if PDF
-    if file_ext == 'pdf':
-        images = convert_from_path(raw_path)
-        image_path = os.path.join(upload_folder, f"{filename}.jpg")
-        images[0].save(image_path)
-    else:
-        image = Image.open(raw_path)
-        image_path = os.path.join(upload_folder, filename)
-        image.save(image_path)
+    # Generate a unique filename using UUID
+    file_ext = uploaded_file.name.split(".")[-1]
+    unique_filename = f"{uuid.uuid4()}.{file_ext}"
 
-    return image_path
+    file_path = os.path.join(save_dir, unique_filename)
+
+    # Save the file
+    with open(file_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
+
+    return file_path
