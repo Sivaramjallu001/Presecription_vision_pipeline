@@ -1,12 +1,12 @@
 import json
 import re
 import ast
+import os
 import pytesseract
 from PIL import Image
 import google.generativeai as genai
 from PIL import Image
 import pytesseract
-import os
 from pdf2image import convert_from_path
 
 genai.configure(api_key="YOUR-API-KEY")  # Replace with your actual key
@@ -26,7 +26,16 @@ def extract_text(image_path):
 
 def extract_with_gemini(image_path):
     model = genai.GenerativeModel("gemini-1.5-flash")
-    image = Image.open(image_path)
+    ext = os.path.splitext(image_path)[1].lower()
+
+    if ext == ".pdf":
+        # Convert PDF to image
+        images = convert_from_path(image_path, dpi=300)
+        image = images[0]  # Use first page only
+    else:
+        # Open image directly
+        image = Image.open(image_path)
+    
 
     prompt = (
         "Extract the following fields from this medical prescription image:\n"
